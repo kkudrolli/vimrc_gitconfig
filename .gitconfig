@@ -1,0 +1,40 @@
+[user]
+	name = Kais Kudrolli
+	email = kkudrolli@gmail.com
+[push]
+    default = simple
+[color]
+	ui = auto
+    branch = auto
+    status = auto
+	interactive = auto
+[core]
+    editor = vim
+[merge]
+	tool = vimdiff
+[ui]
+	color = true
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[alias]
+    logp = log --graph --pretty=format:'%C(red)%h%Creset -%C(bold yellow)%d%Creset %s %C(green)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    slog = log --pretty=kaiscustom
+    lol = log --graph --decorate --oneline
+    rdiff = !git diff origin/$(git rev-parse --abbrev-ref HEAD) --stat
+    hdiff = !git diff $(git rev-parse --abbrev-ref HEAD)
+    pushdiff= !git diff --stat @{u}...
+    pulldiff= !git diff --stat @{u}... @{u}
+    listbranch = !git branch --list -a \"*$1*\"
+    lb = !git listbranch
+    workbranch = "!f() { git checkout -b $1 -- && git push -u origin $1; }; f"
+    wb = !git workbranch
+    switch = "!f() { git checkout $* -- && git submodule sync && \\\n    git submodule update --init && git --no-pager diff --stat @{-1}; }; f"
+    sw = !git switch
+    reltag = "!f() { git tag $* -- && git push origin $1; }; f"
+    su = submodule update --init
+[core]
+    editor = vim
+[pretty]
+    kaiscustom = %C(yellow)%h %<(14)%Cgreen%ad %<(11,trunc)%C(magenta)%ae %C(auto)%d %Creset%s
